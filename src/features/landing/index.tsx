@@ -9,9 +9,16 @@ import {
   GraduationCap,
   Globe,
   Zap,
+  Menu,
 } from 'lucide-react'
 import { Logo } from '@/assets/logo'
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import {
   Card,
   CardContent,
@@ -38,6 +45,29 @@ export function Landing() {
         'Join LearningCenter to connect with expert teachers, access quality educational resources, and accelerate your learning journey in Indonesia.'
       document.head.appendChild(meta)
     }
+
+    // SEO: Add structured data
+    const structuredData = {
+      '@context': 'https://schema.org',
+      '@type': 'EducationalOrganization',
+      name: 'LearningCenter',
+      description: 'Empowering education for Indonesia. Connecting students and teachers.',
+      url: window.location.origin,
+      sameAs: [
+        'https://facebook.com/learningcenter',
+        'https://twitter.com/learningcenter',
+        'https://instagram.com/learningcenter',
+      ],
+    }
+
+    const script = document.createElement('script')
+    script.type = 'application/ld+json'
+    script.text = JSON.stringify(structuredData)
+    document.head.appendChild(script)
+
+    return () => {
+      document.head.removeChild(script)
+    }
   }, [])
 
   return (
@@ -52,24 +82,51 @@ export function Landing() {
             </span>
           </div>
           <nav className='flex items-center gap-4'>
-            <Link to='/sign-in'>
-              <Button variant='ghost' size='sm'>
-                Sign in
-              </Button>
-            </Link>
-            <Link to='/sign-up'>
-              <Button size='sm'>Get Started</Button>
-            </Link>
+            {/* Desktop Nav */}
+            <div className='hidden items-center gap-4 md:flex'>
+              <Link to='/sign-in'>
+                <Button variant='ghost'>Sign in</Button>
+              </Link>
+              <Link to='/sign-up'>
+                <Button>Get Started</Button>
+              </Link>
+            </div>
+
+            {/* Mobile Nav */}
+            <div className='md:hidden'>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant='ghost' size='icon' aria-label='Open menu'>
+                    <Menu className='h-6 w-6' />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align='end' className='w-48'>
+                  <DropdownMenuItem asChild>
+                    <Link to='/sign-in' className='w-full cursor-pointer'>
+                      Sign in
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link
+                      to='/sign-up'
+                      className='w-full cursor-pointer font-semibold'
+                    >
+                      Get Started
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </nav>
         </div>
       </header>
 
       <main className='flex-1'>
         {/* Hero Section */}
-        <section className='container mx-auto grid gap-12 px-4 py-16 md:grid-cols-2 md:py-24 lg:py-32'>
+        <section className='container mx-auto grid gap-8 px-4 py-16 md:grid-cols-2 md:gap-12 md:py-24 lg:py-32'>
           <div className='flex flex-col justify-center space-y-6'>
             <div className='inline-flex w-fit items-center rounded-full border bg-muted px-3 py-1 text-sm font-medium'>
-              <span className='mr-2 flex h-2 w-2 rounded-full bg-gradient-to-r from-primary to-primary/60'></span>
+              <span className='mr-2 flex h-4 w-4 rounded-full bg-gradient-to-r from-purple-500 to-green-400 rotate-45'></span>
               Now available for all students
             </div>
             <h1 className='text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl'>
@@ -82,16 +139,16 @@ export function Landing() {
             </p>
             <div className='flex flex-col gap-3 sm:flex-row'>
               <Link to='/sign-up'>
-                <Button size='lg' className='w-full sm:w-auto'>
+                <Button size='lg' className='h-12 w-full px-8 text-lg sm:w-auto'>
                   Start Learning Now
-                  <ArrowRight className='ml-2 h-4 w-4' />
+                  <ArrowRight className='ml-2 h-5 w-5' />
                 </Button>
               </Link>
               <Link to='/sign-in'>
                 <Button
                   variant='outline'
                   size='lg'
-                  className='w-full sm:w-auto'
+                  className='h-12 w-full text-lg sm:w-auto'
                 >
                   View Courses
                 </Button>
@@ -112,12 +169,19 @@ export function Landing() {
             </div>
           </div>
           <div className='flex items-center justify-center'>
-            <div className='relative aspect-square w-full max-w-[500px] overflow-hidden rounded-xl border bg-muted/50 shadow-2xl'>
+            {/* 
+              Image container:
+              - Removed aspect-square to prevent cropping of the 2:1 aspect ratio image.
+              - Uses natural image height (h-auto) to maintain aspect ratio.
+            */}
+            <div className='relative w-full max-w-[500px] overflow-hidden rounded-xl border bg-muted/50 shadow-2xl'>
               <img
                 src='/images/shadcn-admin.png'
                 alt='LearningCenter Dashboard Preview'
-                className='h-full w-full object-cover object-left-top'
+                className='h-auto w-full'
                 loading='eager'
+                width={2560}
+                height={1280}
               />
               <div className='absolute inset-0 bg-gradient-to-t from-background/20 to-transparent' />
             </div>
@@ -308,24 +372,24 @@ export function Landing() {
           </div>
           <div>
             <h3 className='mb-4 font-semibold'>Platform</h3>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <ul className='space-y-3 text-sm text-muted-foreground'>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/' className='hover:text-foreground py-1 block'>
                   Home
                 </Link>
               </li>
               <li>
-                <Link to='/sign-in' className='hover:text-foreground'>
+                <Link to='/sign-in' className='hover:text-foreground py-1 block'>
                   Courses
                 </Link>
               </li>
               <li>
-                <Link to='/sign-in' className='hover:text-foreground'>
+                <Link to='/sign-in' className='hover:text-foreground py-1 block'>
                   Mentors
                 </Link>
               </li>
               <li>
-                <Link to='/sign-in' className='hover:text-foreground'>
+                <Link to='/sign-in' className='hover:text-foreground py-1 block'>
                   Pricing
                 </Link>
               </li>
@@ -333,24 +397,24 @@ export function Landing() {
           </div>
           <div>
             <h3 className='mb-4 font-semibold'>Company</h3>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <ul className='space-y-3 text-sm text-muted-foreground'>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/' className='hover:text-foreground py-1 block'>
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/' className='hover:text-foreground py-1 block'>
                   Careers
                 </Link>
               </li>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/' className='hover:text-foreground py-1 block'>
                   Blog
                 </Link>
               </li>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/' className='hover:text-foreground py-1 block'>
                   Contact
                 </Link>
               </li>
@@ -358,19 +422,19 @@ export function Landing() {
           </div>
           <div>
             <h3 className='mb-4 font-semibold'>Legal</h3>
-            <ul className='space-y-2 text-sm text-muted-foreground'>
+            <ul className='space-y-3 text-sm text-muted-foreground'>
               <li>
-                <Link to='/privacy' className='hover:text-foreground'>
+                <Link to='/privacy' className='hover:text-foreground py-1 block'>
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to='/terms' className='hover:text-foreground'>
+                <Link to='/terms' className='hover:text-foreground py-1 block'>
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link to='/cookie' className='hover:text-foreground'>
+                <Link to='/cookie' className='hover:text-foreground py-1 block'>
                   Cookie Policy
                 </Link>
               </li>
