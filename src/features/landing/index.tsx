@@ -360,17 +360,17 @@ export function Landing() {
             <h3 className='mb-4 font-semibold'>Legal</h3>
             <ul className='space-y-2 text-sm text-muted-foreground'>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/privacy' className='hover:text-foreground'>
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/terms' className='hover:text-foreground'>
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link to='/' className='hover:text-foreground'>
+                <Link to='/cookie' className='hover:text-foreground'>
                   Cookie Policy
                 </Link>
               </li>
