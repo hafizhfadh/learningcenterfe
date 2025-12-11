@@ -69,7 +69,7 @@ export function Landing() {
         <section className='container mx-auto grid gap-12 px-4 py-16 md:grid-cols-2 md:py-24 lg:py-32'>
           <div className='flex flex-col justify-center space-y-6'>
             <div className='inline-flex w-fit items-center rounded-full border bg-muted px-3 py-1 text-sm font-medium'>
-              <span className='mr-2 flex h-2 w-2 rounded-full bg-primary'></span>
+              <span className='mr-2 flex h-2 w-2 rounded-full bg-gradient-to-r from-primary to-primary/60'></span>
               Now available for all students
             </div>
             <h1 className='text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl'>
