@@ -1,19 +1,14 @@
-import { z } from 'zod'
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useAuthStore } from '@/stores/auth-store'
-import { SignIn } from '@/features/auth/sign-in'
+import { Landing } from '@/features/landing'
 
-const searchSchema = z.object({
-  redirect: z.string().optional(),
-})
-
-export const Route = createFileRoute('/(auth)/sign-in')({
+export const Route = createFileRoute('/')({
   beforeLoad: () => {
     const { auth } = useAuthStore.getState()
     if (auth.accessToken) {
       throw redirect({ to: '/dashboard' })
     }
   },
-  component: SignIn,
-  validateSearch: searchSchema,
+  component: Landing,
 })
+

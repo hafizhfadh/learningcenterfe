@@ -4,8 +4,6 @@ Admin Dashboard UI crafted with Shadcn and Vite. Built with responsiveness and a
 
 ![alt text](public/images/shadcn-admin.png)
 
-[![Sponsored by Clerk](https://img.shields.io/badge/Sponsored%20by-Clerk-5b6ee1?logo=clerk)](https://go.clerk.com/GttUAaK)
-
 I've been creating dashboard UIs at work and for my personal projects. I always wanted to make a reusable collection of dashboard UI for future projects; and here it is now. While I've created a few custom components, some of the code is directly adapted from ShadcnUI examples.
 
 > This is not a starter project (template) though. I'll probably make one in the future.
@@ -72,7 +70,7 @@ If you want to update components using the Shadcn CLI (e.g., `npx shadcn@latest 
 
 **Icons:** [Lucide Icons](https://lucide.dev/icons/), [Tabler Icons](https://tabler.io/icons) (Brand icons only)
 
-**Auth (partial):** [Clerk](https://go.clerk.com/GttUAaK)
+**Auth:** Pluggable (see Authentication section)
 
 ## Run Locally
 
@@ -106,9 +104,23 @@ If you find this project helpful or use this in your own work, consider [sponsor
 
 For questions or sponsorship inquiries, feel free to reach out at [satnaingdev@gmail.com](mailto:satnaingdev@gmail.com).
 
-### Current Sponsor
+### Authentication
 
-- [Clerk](https://go.clerk.com/GttUAaK) - authentication and user management for the modern web
+Clerk authentication has been fully removed from this project. The app now uses a lightweight mock auth via `useAuthStore` for demo purposes (local token persisted with cookies).
+
+If you need production-grade authentication, consider integrating one of the following:
+
+- Firebase Auth (client-side SDK)
+- Auth0 SPA SDK
+- Supabase Auth
+- Lucia (headless auth)
+
+General integration steps:
+
+- Create an `AuthContext` provider with `user`, `signIn`, `signOut` methods.
+- Persist tokens securely (cookies with `HttpOnly` on server, or `localStorage` for pure client demos).
+- Wrap protected routes with a `RequireAuth` component that redirects to `/sign-in`.
+- Update `.env` with provider keys and document setup in README.
 
 ## Author
 
